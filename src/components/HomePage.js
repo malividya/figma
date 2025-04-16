@@ -1,160 +1,242 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-//import '../styles/HomePage.css';
-import welcomeImg from '../images/img.jpeg';
 import styled from 'styled-components';
 import { Button } from '../components/ui/button';
+
+import images from '../images';
 import {
-  Card,
-  CardTitle,
-  CardDescription,
-  CardHeader,
-  CardContent
-} from '../components/ui/card';
-const MainContent = styled.main`
-  flex: 1;
-  padding-top: 32px;
+  CircularProgressbarWithChildren,
+  buildStyles,
+} from 'react-circular-progressbar';
+
+const Container = styled.div`
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f7f7f7;
+  line-height: 1.6;
 `;
 
-const HeroSectionWrapper = styled.section`
-  background-color: #e9ecef;
-  padding: 80px 0;
-  text-align: center;
-`;
-
-const HeroContainer = styled.div`
+const HeroSection = styled.section`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: space-between;
 `;
 
-const HeroText = styled.div`
-  max-width: 600px;
-  margin-bottom: 32px;
+const HeroLeft = styled.div`
+  flex: 1;
+  padding-right: 40px;
 `;
 
-const HeroTitle = styled.h1`
-  font-size: 40px;
-  margin-bottom: 16px;
+const Title = styled.h1`
+  font-size: 2.5em;
+  color: #333;
+  margin-bottom: 15px;
 `;
 
-const HeroDescription = styled.p`
-  font-size: 18px;
-  color: #555;
-  margin-bottom: 32px;
-  line-height: 1.7;
+const Description = styled.p`
+  color: #666;
+  margin-bottom: 30px;
 `;
 
-const HeroCTAButton = styled(Button)`
-  background-color: #28a745;
-  color: white;
-  padding: 12px 24px;
-  font-size: 18px;
-  transition: background-color 0.3s ease;
+const Buttons = styled.div`
+  display: flex;
+  gap: 15px;
+  margin-bottom: 40px;
+`;
 
-  &:hover {
-    background-color: #218838;
+const Stats = styled.div`
+  display: flex;
+  gap: 30px;
+  margin-bottom: 40px;
+`;
+
+const Stat = styled.div`
+  text-align: left;
+
+  .number {
+    font-size: 2em;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .label {
+    color: #777;
+    font-size: 0.9em;
   }
 `;
 
-const HeroImage = styled.div`
+const HeroRight = styled.div`
+  flex: 1;
+  text-align: right;
+  position: relative;
+
   img {
     max-width: 100%;
     height: auto;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
 `;
 
-const FeaturesSectionWrapper = styled.section`
-  padding: 80px 0;
-  text-align: center;
+const ClientBadge = styled.div`
+  background-color: white;
+  color: #333;
+  border-radius: 6px;
+  padding: 10px 15px;
+  font-size: 0.8em;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+
+  strong {
+    color: #007bff;
+  }
 `;
 
-const FeaturesTitle = styled.h2`
-  font-size: 32px;
-  margin-bottom: 32px;
+const ProgressCircleWrapper = styled.div`
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color:white;
 `;
 
-const FeatureCards = styled.div`
+const ColorIndicators = styled.div`
+  position: absolute;
+  top: 20px;
+  left: 20px;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  margin-top: 16px;
+  gap: 10px;
+
+  .color-box {
+    width: 30px;
+    height: 20px;
+    border-radius: 4px;
+  }
+
+  .primary {
+    background-color: #ff6f00;
+  }
+
+  .secondary {
+    background-color: #1a237e;
+  }
 `;
 
-const FeatureCardWrapper = styled(Card)`
-  margin-bottom: 16px;
-  width: 300px;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+const OrangeButton = styled.a`
+  background-color: #ff6f00;
+  color: white;
+  padding: 15px 30px;
+  border-radius: 6px;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
 
   &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    background-color: #e65c00;
   }
 `;
 
-const FeatureCardTitle = styled(CardTitle)`
-  font-size: 20px;
-  margin-bottom: 8px;
+const OutlineButton = styled.a`
+  background-color: transparent;
+  color: #ff6f00;
+  border: 2px solid #ff6f00;
+  padding: 15px 30px;
+  border-radius: 6px;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
+
+  &:hover {
+    background-color: #ff6f00;
+    color: white;
+  }
 `;
 
-const FeatureCardDescription = styled(CardDescription)`
-  color: #666;
-`;
+const ColoredDonut = ({ value, colors }) => {
+  const total = 100;
+  const segments = colors.map((color, index) => {
+    const start = (index / colors.length) * total;
+    const end = ((index + 1) / colors.length) * total;
+    const dashArray = `${end - start}, ${total}`;
+    const dashOffset = start;
 
-const HomePage = () => {
+    return (
+      <circle
+        key={index}
+        cx="18"
+        cy="18"
+        r="16"
+        fill="none"
+        stroke={color}
+        strokeWidth="4"
+        strokeDasharray={dashArray}
+        strokeDashoffset={dashOffset}
+      />
+    );
+  });
+
   return (
-    <MainContent>
-      <HeroSectionWrapper>
-        <HeroContainer className="container">
-          <HeroText>
-            <HeroTitle>Welcome to Techieify</HeroTitle>
-            <HeroDescription>
-              Your one-stop solution for all your tech needs.
-            </HeroDescription>
-            <HeroCTAButton>Learn More</HeroCTAButton>
-          </HeroText>
-          <HeroImage>
-            <img src={welcomeImg} alt="Welcome" />
-          </HeroImage>
-        </HeroContainer>
-      </HeroSectionWrapper>
-
-      <FeaturesSectionWrapper>
-        <div className="container">
-          <FeaturesTitle>Key Features</FeaturesTitle>
-          <FeatureCards>
-            <FeatureCardWrapper>
-              <CardHeader>
-                <FeatureCardTitle>Feature 1</FeatureCardTitle>
-              </CardHeader>
-              <CardContent>
-                <FeatureCardDescription>Description of feature 1.</FeatureCardDescription>
-              </CardContent>
-            </FeatureCardWrapper>
-            <FeatureCardWrapper>
-              <CardHeader>
-                <FeatureCardTitle>Feature 2</FeatureCardTitle>
-              </CardHeader>
-              <CardContent>
-
-                <FeatureCardDescription>Description of feature 2.</FeatureCardDescription>
-              </CardContent>
-            </FeatureCardWrapper>
-            <FeatureCardWrapper>
-              <CardHeader>
-                <FeatureCardTitle>Feature 3</FeatureCardTitle>
-              </CardHeader>
-              <CardContent>
-                <FeatureCardDescription>Description of feature 3.</FeatureCardDescription>
-              </CardContent>
-            </FeatureCardWrapper>
-          </FeatureCards>
-        </div>
-      </FeaturesSectionWrapper>
-    </MainContent>
+    <svg width="70" height="70" viewBox="0 0 36 36">
+      {segments}
+      <text x="18" y="22" textAnchor="middle" fontSize="5" fill="#333">
+        {value}%
+      </text>
+    </svg>
   );
 };
 
-export default HomePage;
+const HeroPage = () => {
+  return (
+    <Container>
+      <ColorIndicators>
+        <div className="color-box primary" />
+        <div className="color-box secondary" />
+      </ColorIndicators>
+
+      <HeroSection>
+        <HeroLeft>
+          <Title>We Help to Build Your IT <span style={{ color: 'orange' }}>Business.</span></Title>
+          <Description>
+            We are a leading construction firm dedicated to transforming ideas
+            into exceptional structures that stand the test of time.
+          </Description>
+          <Buttons>
+            <OrangeButton href="#">Get Started</OrangeButton>
+            <OutlineButton href="#">Our Services</OutlineButton>
+          </Buttons>
+
+          <Stats>
+            <Stat>
+              <div className="number">1920+</div>
+              <div className="label">Total Project Done</div>
+            </Stat>
+            <Stat>
+              <div className="number">22+</div>
+              <div className="label">Years of Experience</div>
+            </Stat>
+          </Stats>
+        </HeroLeft>
+
+        <HeroRight>
+          <img src={images['11.jpg']} alt="IT Business Illustration" />
+          <ClientBadge>
+            <strong>500+</strong> Total Client
+          </ClientBadge>
+          <ProgressCircleWrapper>
+            <ColoredDonut value={84} colors={['#FF6F00', '#1A237E', '#4CAF50', '#E91E63']} />
+          </ProgressCircleWrapper>
+        </HeroRight>
+      </HeroSection>
+    </Container>
+  );
+};
+
+export default HeroPage;

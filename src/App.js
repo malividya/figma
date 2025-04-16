@@ -5,6 +5,8 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './components/HomePage';
 import AboutPage from './components/AboutPage';
+import Projects from './components/Projects';
+import Blog from './components/Blog';
 import ServicesPage from './components/ServicesPage';
 import ContactPage from './components/ContactPage';
 import './App.css';
@@ -36,6 +38,8 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/project" element={<Projects />} />
+        <Route path="/blog" element={<Blog />} />
       </Routes>
       <Footer />
     </Router>

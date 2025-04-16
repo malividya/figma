@@ -1,115 +1,119 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-//import '../styles/ContactPage.css';
-import styled from 'styled-components';
-import MainContent from '../components/ui/maincontent';
-import { Input } from '../components/ui/input';
-import { Textarea } from '../components/ui/textarea';
-import { Button } from '../components/ui/button';
+import React from 'react';
 
-const ContactSectionWrapper = styled.section`
-  padding: 80px 0;
-`;
-
-const ContactTitle = styled.h2`
-  font-size: 32px;
-  margin-bottom: 16px;
-  text-align:center;
-`;
-
-const ContactDescription = styled.p`
-  font-size: 18px;
-  color: #555;
-  margin-bottom: 32px;
-  text-align:center;
-`;
-
-const ContactForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  max-width: 400px;
-  margin: 0 auto;
-`;
-
-const ContactInput = styled(Input)`
-  padding: 12px;
-  margin-bottom: 16px;
-  font-size: 1rem;
-`;
-
-const ContactTextArea = styled(Textarea)`
-  padding: 12px;
-  margin-bottom: 16px;
-  font-size: 1rem;
-  min-height: 120px;
-  resize: vertical;
-`;
-
-const ContactButton = styled(Button)`
-  background-color: #007bff;
-  color: white;
-  padding: 12px 24px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 18px;
-  transition: background-color 0.3s ease;
-  align-self: center;
-
-  &:hover {
-    background-color: #0056b3;
-  }
-`;
-
-const ContactPage = () => {
-  const [name, setName] = React.useState('');
-  const [email, setEmail] = React.useState('');
-  const [message, setMessage] = React.useState('');
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission logic here
-    console.log('Name:', name, 'Email:', email, 'Message:', message);
-    
-    setName('');
-    setEmail('');
-    setMessage('');
+const FreeConsultation = () => {
+  const styles = {
+    body: {
+      fontFamily: 'sans-serif',
+      margin: 0,
+      padding: 0,
+      backgroundColor: '#f7f7f7',
+      lineHeight: 1.6,
+    },
+    ctaSection: {
+      maxWidth: '1200px',
+      margin: '40px auto',
+      padding: '30px',
+      backgroundColor: '#fff',
+      borderRadius: '8px',
+      boxShadow: '0 0 20px rgba(0, 0, 0, 0.1)',
+      textAlign: 'center',
+    },
+    ctaBanner: {
+      backgroundColor: '#ff7043',
+      color: '#fff',
+      padding: '40px',
+      borderRadius: '8px',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      flexWrap: 'wrap',
+      gap: '20px',
+    },
+    ctaText: {
+      textAlign: 'left',
+      flex: '1 1 300px',
+    },
+    getInTouch: {
+      fontSize: '0.9em',
+      marginBottom: '10px',
+    },
+    heading: {
+      fontSize: '1.8em',
+      marginBottom: '20px',
+      lineHeight: 1.3,
+    },
+    button: {
+      backgroundColor: '#fff',
+      color: '#ff7043',
+      border: 'none',
+      padding: '15px 30px',
+      borderRadius: '6px',
+      fontWeight: 'bold',
+      cursor: 'pointer',
+      fontSize: '1em',
+      transition: 'background-color 0.3s ease',
+    },
+    buttonHover: {
+      backgroundColor: '#f0f0f0',
+    },
+    trusted: {
+      color: '#777',
+      fontSize: '0.9em',
+      marginTop: '30px',
+      marginBottom: '15px',
+    },
+    logoContainer: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      gap: '20px',
+      flexWrap: 'wrap',
+    },
+    logo: {
+      color: '#555',
+      fontWeight: 'bold',
+      fontSize: '1.1em',
+      padding: '10px 15px',
+      border: '1px solid #ddd',
+      borderRadius: '4px',
+    },
+    itcore: { color: '#007bff' },
+    solar: { color: '#ffc107' },
+    rental: { color: '#28a745' },
+    query: { color: '#dc3545' },
+    fourpix: { color: '#6c757d' },
+    it: { color: '#17a2b8' },
   };
 
   return (
-    <MainContent>
-      <ContactSectionWrapper>
-        <div className="container">
-          <ContactTitle>Contact Us</ContactTitle>
-          <ContactDescription>
-            Get in touch with us for any inquiries.
-          </ContactDescription>
-          <ContactForm onSubmit={handleSubmit}>
-            <ContactInput
-              type="text"
-              placeholder="Your Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-            <ContactInput
-              type="email"
-              placeholder="Your Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <ContactTextArea
-              placeholder="Your Message"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              required
-            />
-            <ContactButton type="submit">Send Message</ContactButton>
-          </ContactForm>
+    <div style={styles.body}>
+      <section style={styles.ctaSection}>
+        <div style={styles.ctaBanner}>
+          <div style={styles.ctaText}>
+            <div style={styles.getInTouch}>Get in Touch</div>
+            <h2 style={styles.heading}>Ready to Get Free Consultation for Any Kind of IT Solution</h2>
+          </div>
+          <button
+            style={styles.button}
+            onMouseOver={(e) => (e.target.style.backgroundColor = '#f0f0f0')}
+            onMouseOut={(e) => (e.target.style.backgroundColor = '#fff')}
+          >
+            Contact Us
+          </button>
         </div>
-      </ContactSectionWrapper>
-    </MainContent>
+
+        <div style={styles.trusted}>Trusted by <span style={{ color: 'orange' }}>10,000+</span> companies around the world</div>
+        <div style={styles.logoContainer}>
+          <div style={{ ...styles.logo, ...styles.itcore }}>ITCORE</div>
+          <div style={{ ...styles.logo, ...styles.solar }}>SOLAR</div>
+          <div style={{ ...styles.logo, ...styles.rental }}>RENTAL</div>
+          <div style={{ ...styles.logo, ...styles.query }}>Query</div>
+          <div style={{ ...styles.logo, ...styles.fourpix }}>fourpix.</div>
+          <div style={{ ...styles.logo, ...styles.it }}>IT</div>
+        </div>
+      </section>
+    </div>
   );
 };
 
-export default ContactPage;
+export default FreeConsultation;

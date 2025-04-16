@@ -53,15 +53,15 @@ const NavLink = styled(Link)`
 `;
 
 const CTAButton = styled(Button)`
-  background-color: #007bff;
-  color: white;
+  background-color:#E46D47;
+  color:rgb(109, 28, 1);
   padding: 10px 20px;
   border-radius: 5px;
   font-size: 16px;
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #0056b3;
+    background-color:rgb(211, 55, 2);
   }
 `;
 
@@ -80,6 +80,12 @@ const Header = () => {
             </NavItem>
             <NavItem>
               <NavLink to="/services">Services</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink to="/project">project</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink to="/blog">Blog</NavLink>
             </NavItem>
             <NavItem>
               <NavLink to="/contact">Contact</NavLink>
